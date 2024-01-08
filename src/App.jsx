@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, useNavigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Homepage from "./pages/Homepage";
 import NotFound from "./pages/NotFound";
 import AllProduct from "./pages/AllProduct";
@@ -10,9 +10,10 @@ import { useUser } from "./context/UserContext";
 
 function App() {
   const { currentUser } = useUser();
-  const navigate = useNavigate();
 
-  const privateRoute = (element) => {};
+  const privateRoute = (element) => {
+    return currentUser ? element : <Navigate replace to="/user/signin" />;
+  };
 
   return (
     <BrowserRouter>
@@ -20,8 +21,8 @@ function App() {
         <Route path="/" element={<Homepage />}>
           <Route index element={<AllProduct />} />
           <Route path="product/:id" element={<Product />} />
-          <Route path="orders" element={<Order />} />
-          <Route path="cart" element={<Cart />} />
+          <Route path="orders" element={privateRoute(<Order />)} />
+          <Route path="cart" element={privateRoute(<Cart />)} />
           <Route path="user/signin" element={<SignIn />} />
         </Route>
         <Route path="*" element={<NotFound />} />
