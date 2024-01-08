@@ -1,11 +1,15 @@
-import DropdownNavbar from "./DropdownNavbar";
-import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
+import styles from "./Navbar.module.css";
+import DropdownNavbar from "./DropdownNavbar";
 import OrderIcon from "./OrderIcon";
 import CartIcon from "./CartIcon";
 import UserIcon from "./UserIcon";
+import { useUser } from "../context/UserContext";
 
 function Navbar() {
+  const { currentUser, logOutUser } = useUser();
+  console.log(currentUser);
+
   return (
     <div className={styles.nav}>
       <NavLink className={` ${styles.logo}`} to={"/"}>
@@ -26,10 +30,22 @@ function Navbar() {
             </NavLink>
           </li>
           <li className={styles.navItems}>
-            <NavLink className={styles.navlink} to={"user/signin"}>
-              <UserIcon />
-              Sign In
-            </NavLink>
+            {!currentUser ? (
+              <NavLink className={styles.navlink} to={"user/signin"}>
+                <UserIcon />
+                Sign In
+              </NavLink>
+            ) : (
+              <div
+                className={styles.navlink}
+                style={{ cursor: "pointer" }}
+                to={"user/signin"}
+                onClick={logOutUser}
+              >
+                <UserIcon />
+                Sign Out
+              </div>
+            )}
           </li>
         </ul>
         <DropdownNavbar />
