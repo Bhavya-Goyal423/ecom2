@@ -8,7 +8,6 @@ import { useUser } from "../context/UserContext";
 
 function Navbar() {
   const { currentUser, logOutUser } = useUser();
-  console.log(currentUser);
 
   return (
     <div className={styles.nav}>
