@@ -1,0 +1,10 @@
+.container {
+}
+.inputContainer {
+  max-width: 60%;
+  min-width: 40%;
+  margin: 0 auto;
+  position: relative;
+  display: flex;
+  align-items: center;
+}
